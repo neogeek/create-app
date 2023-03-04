@@ -1,0 +1,100 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    services:
+      postgres:
+        image: postgres:15.2
+        env:
+          TZ: UTC
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14
+
+      - name: Update NPM to latest
+        run: npm install npm@latest -g
+
+      - name: Print Node.js and NPM version
+        run: |
+          node -v
+          npm -v
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+
+      - name: Print PostgreSQL version
+        run: psql -h localhost -d postgres -U postgres -c "SELECT version();"
+        env:
+          PGPASSWORD: postgres
+
+      - name: Install dependencies for all packages
+        run: npm ci
+
+      - name: Setup PostgreSQL database
+        run: npx turbo db:push db:generate
+        env:
+          DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/create-app?schema=public'
+
+      - name: Create .env.local file
+        working-directory: apps/web
+        run: cp .env.example .env.local
+
+      - name: Generate JWT RSA keys
+        working-directory: apps/web
+        run: ./bin/generate_jwt_keys.sh
+
+      - name: Disable Next.js Telemetry
+        run: npx next telemetry disable
+
+      - name: Lint codebase
+        run: npm run lint
+
+      - name: Build codebase
+        run: npm run build
+
+      - name: Run unit tests
+        timeout-minutes: 5
+        run: npm test
+
+      - name: Run styleguide tests
+        timeout-minutes: 5
+        run: npm run test:styleguide
+
+      - name: Run end to end tests
+        timeout-minutes: 5
+        run: npm run test:e2e

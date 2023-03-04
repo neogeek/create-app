@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  @apply text-blue-600;
+  @apply underline;
+}
+
+@layer components {
+  .highlight {
+    @apply border-b-8 border-yellow-300;
+  }
+
+  .page-wrapper {
+    @apply my-10 mx-auto max-w-sm;
+  }
+
+  .btn-social-network {
+    @apply my-2 block w-full rounded-md border-2 border-gray-200 bg-white py-4 px-5 text-center text-base font-bold leading-none text-gray-700 no-underline focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-social-network-img {
+    @apply mr-3 inline-block align-sub;
+  }
+}

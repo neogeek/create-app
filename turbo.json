@@ -1,0 +1,53 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "start": {
+      "dependsOn": ["^database#db:generate"],
+      "env": ["VERCEL_URL", "SENTRY_DSN", "API_SECRET_KEY"]
+    },
+    "build": {
+      "dependsOn": ["^database#db:generate"],
+      "env": ["VERCEL_URL", "SENTRY_DSN", "API_SECRET_KEY"],
+      "outputs": [".next/**"]
+    },
+    "lint": {
+      "dependsOn": ["^database#db:generate"],
+      "outputs": []
+    },
+    "format": {
+      "outputs": []
+    },
+    "dev": {
+      "dependsOn": ["^database#db:generate"],
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["^database#db:generate"],
+      "cache": false
+    },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "database#db:generate": {
+      "cache": false
+    },
+    "database#db:push": {
+      "cache": false
+    },
+    "styleguide#storybook": {
+      "cache": false
+    },
+    "styleguide#build": {
+      "outputs": ["storybook-static/**"]
+    },
+    "styleguide#storybook-static": {
+      "dependsOn": ["^styleguide#build"],
+      "cache": false
+    },
+    "styleguide#test-storybook": {
+      "cache": false
+    }
+  },
+  "globalEnv": ["PORT", "NODE_ENV"]
+}

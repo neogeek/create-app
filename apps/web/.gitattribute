@@ -1,0 +1,26 @@
+* text=auto
+
+.eslintrc text eol=lf
+.gitignore text eol=lf
+.nvmrc text eol=lf
+.prettierrc text eol=lf
+
+*.sh text eol=lf
+
+*.css text eol=lf
+*.cjs text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.yml text eol=lf
+
+.env.* text eol=lf
+
+*.ico -text
+*.jpeg -text
+*.jpg -text
+*.png -text
+

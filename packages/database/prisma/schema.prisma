@@ -1,0 +1,50 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  userId      Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  username    String     @unique @default(uuid())
+  displayName String     @default("")
+  Provider    Provider[]
+}
+
+model Provider {
+  providerId Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  name       String       @unique
+  type       ProviderType @default(google_oauth)
+  metaData   Json         @default("{}")
+  userId     Int
+  user       User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  Token      Token[]
+
+  @@unique([name, type])
+  @@index([userId])
+}
+
+model Token {
+  tokenId    Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  expiresAt  DateTime
+  token      String   @unique @db.VarChar(512)
+  providerId Int
+  provider   Provider @relation(fields: [providerId], references: [providerId], onDelete: Cascade)
+
+  @@index([providerId])
+}
+
+enum ProviderType {
+  google_oauth
+}

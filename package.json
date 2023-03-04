@@ -1,0 +1,32 @@
+{
+  "name": "@neogeek/create-app",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=18.14"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "turbo run start --filter web",
+    "build": "turbo run build --filter web",
+    "lint": "turbo run lint",
+    "format": "prettier --write .",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test --filter web",
+    "test:e2e": "turbo run test:e2e",
+    "test:styleguide": "npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npm run storybook-static\" \"npx wait-on http://127.0.0.1:6006 && npm run test-storybook\"",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "storybook": "turbo run storybook",
+    "storybook-static": "turbo run storybook-static",
+    "test-storybook": "turbo run test-storybook"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "prettier": "2.8.4",
+    "turbo": "1.8.3"
+  },
+  "private": true
+}

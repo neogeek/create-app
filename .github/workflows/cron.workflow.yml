@@ -1,0 +1,21 @@
+name: Hourly Cron Jobs
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 * * * *'
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        domain: ['http://localhost:3000']
+
+    steps:
+      - name: Purge expired tokens
+        run: |
+          curl --fail --request POST \
+          --url '${{ matrix.domain }}/api/cron/purge' \
+          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'

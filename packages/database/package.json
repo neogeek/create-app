@@ -1,0 +1,19 @@
+{
+  "name": "database",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "dependencies": {
+    "@prisma/client": "4.11.0"
+  },
+  "devDependencies": {
+    "prisma": "4.11.0",
+    "typescript": "4.9.5",
+    "dotenv-cli": "7.0.0"
+  },
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "dotenv -e ../../apps/web/.env.local -- bash -c 'prisma db push --skip-generate'",
+    "db:studio": "prisma studio"
+  },
+  "private": true
+}

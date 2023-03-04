@@ -1,0 +1,19 @@
+{
+  "name": "web-tests",
+  "dependencies": {
+    "web": "*"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.31.2",
+    "eslint": "8.35.0",
+    "eslint-config-custom": "*",
+    "start-server-and-test": "2.0.0",
+    "tsconfig": "*",
+    "typescript": "4.9.5"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "start-server-and-test --expect 200 \"(cd ../../apps/web && npm run start)\" http://127.0.0.1:3000 \"playwright test\""
+  },
+  "private": true
+}

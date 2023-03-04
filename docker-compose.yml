@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  nextjs:
+    container_name: create-app-nextjs
+    build:
+      context: .
+    depends_on:
+      - postgres
+    restart: always
+    platform: linux/amd64
+    env_file: ./apps/web/.env.local
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/create-app
+    healthcheck:
+      test: lsof -i @postgres:5432 || exit 1
+      interval: 30s
+      retries: 10
+      start_period: 20s
+      timeout: 10s
+    command: bash -c "npm run db:push && npm run dev"
+    ports:
+      - '3000:3000'
+    networks:
+      - create-app-network
+    volumes:
+      - ./packages/database/prisma:/app/packages/database/prisma/prisma
+      - ./apps/web/src:/app/apps/web/src
+  postgres:
+    container_name: create-app-postgres
+    image: postgres:15.2
+    restart: always
+    platform: linux/amd64
+    environment:
+      TZ: 'UTC'
+      POSTGRES_DB: create-app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '2345:5432'
+    networks:
+      - create-app-network
+    volumes:
+      - ./packages/database/postgres-data:/var/lib/postgresql/data
+
+networks:
+  create-app-network:
+    name: create-app-network
