@@ -33,11 +33,7 @@ describe('auth', () => {
   });
 
   test('authMiddleware', async () => {
-    const emailAddress = faker.internet.email(
-      undefined,
-      undefined,
-      'gmail.com'
-    );
+    const emailAddress = faker.internet.email({ provider: 'gmail.com' });
 
     mockFetchResponse({
       access_token: 'access_token',
@@ -81,11 +77,7 @@ describe('auth', () => {
   });
 
   test('login', async () => {
-    const emailAddress = faker.internet.email(
-      undefined,
-      undefined,
-      'gmail.com'
-    );
+    const emailAddress = faker.internet.email({ provider: 'gmail.com' });
 
     mockFetchResponse({
       access_token: 'access_token',
@@ -137,11 +129,7 @@ describe('auth', () => {
   });
 
   test('logout', async () => {
-    const emailAddress = faker.internet.email(
-      undefined,
-      undefined,
-      'gmail.com'
-    );
+    const emailAddress = faker.internet.email({ provider: 'gmail.com' });
 
     mockFetchResponse({
       access_token: 'access_token',
