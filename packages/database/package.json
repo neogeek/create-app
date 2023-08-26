@@ -3,12 +3,12 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "dependencies": {
-    "@prisma/client": "5.1.1"
+    "@prisma/client": "5.2.0"
   },
   "devDependencies": {
-    "prisma": "5.1.1",
-    "typescript": "5.1.6",
-    "dotenv-cli": "7.2.1"
+    "prisma": "5.2.0",
+    "typescript": "5.2.2",
+    "dotenv-cli": "7.3.0"
   },
   "scripts": {
     "db:generate": "prisma generate",
