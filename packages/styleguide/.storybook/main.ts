@@ -7,14 +7,14 @@ export default {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     {
-      name: '@storybook/addon-postcss',
+      name: '@storybook/addon-styling-webpack',
       options: {
-        cssLoaderOptions: {
-          importLoaders: 1,
-        },
-        postcssLoaderOptions: {
-          implementation: require('postcss'),
-        },
+        rules: [
+          {
+            test: /\.s?css$/,
+            use: ['style-loader', 'css-loader', 'postcss-loader'],
+          },
+        ],
       },
     },
     '@storybook/addon-a11y',
