@@ -28,7 +28,7 @@ Everyone is welcome to use this starter template, report bugs, and suggest chang
 ## Tech Stack
 
 - ▲ [Turborepo](https://turbo.build/repo) - Monorepo support
-- ▲ [Next.js 13](https://nextjs.org/) - React framework
+- ▲ [Next.js 14](https://nextjs.org/) - React framework
 - 🦺 [TypeScript](https://www.typescriptlang.org/) - Type safety code base
 - 📦 [tRPC](https://trpc.io/) - Type safe client and server side API requests
 - 🎯 [trpc-openapi](https://github.com/jlalmes/trpc-openapi) - Dynamic REST endpoints and automatic Swagger documentation
