@@ -2,7 +2,7 @@
 ## ▲ Builder
 ###############
 
-FROM --platform=linux/amd64 node:18.14-alpine AS builder
+FROM --platform=linux/amd64 node:18.18-alpine AS builder
 
 RUN apk update
 RUN apk add --no-cache libc6-compat bash
@@ -20,7 +20,7 @@ RUN turbo prune --scope=web --docker
 ## ▲ Installer
 ###############
 
-FROM --platform=linux/amd64 node:18.14-alpine AS installer
+FROM --platform=linux/amd64 node:18.18-alpine AS installer
 
 ARG PORT
 ENV PORT=$PORT
@@ -77,7 +77,7 @@ RUN turbo run build --filter=web
 ## ▲ Runner
 ###############
 
-FROM --platform=linux/amd64 node:18.14-alpine AS runner
+FROM --platform=linux/amd64 node:18.18-alpine AS runner
 
 RUN apk update
 RUN apk add --no-cache libc6-compat bash
