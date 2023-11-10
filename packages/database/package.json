@@ -3,10 +3,10 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "dependencies": {
-    "@prisma/client": "5.2.0"
+    "@prisma/client": "5.5.2"
   },
   "devDependencies": {
-    "prisma": "5.2.0",
+    "prisma": "5.5.2",
     "typescript": "5.2.2",
     "dotenv-cli": "7.3.0"
   },

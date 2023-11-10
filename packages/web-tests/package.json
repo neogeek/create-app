@@ -4,10 +4,10 @@
     "web": "*"
   },
   "devDependencies": {
-    "@playwright/test": "1.37.1",
-    "eslint": "8.48.0",
+    "@playwright/test": "1.39.0",
+    "eslint": "8.53.0",
     "eslint-config-custom": "*",
-    "start-server-and-test": "2.0.0",
+    "start-server-and-test": "2.0.2",
     "tsconfig": "*",
     "typescript": "5.2.2"
   },
