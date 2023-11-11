@@ -91,23 +91,8 @@ jobs:
         timeout-minutes: 5
         run: npm test
 
-      - name: Restore Playwright Cache
-        uses: actions/cache/restore@v3
-        id: cache-playwright
-        with:
-          path: /root/.cache/ms-playwright
-          key: playwright-${{ runner.os }}
-
-      - if: steps.cache-playwright.outputs.cache-hit != 'true'
-        name: Install Playwright
+      - name: Install Playwright
         run: npx playwright install
-
-      - if: steps.cache-playwright.outputs.cache-hit != 'true'
-        name: Store Playwright Cache
-        uses: actions/cache/save@v3
-        with:
-          path: /root/.cache/ms-playwright
-          key: playwright-${{ runner.os }}
 
       - name: Run styleguide tests
         timeout-minutes: 5
